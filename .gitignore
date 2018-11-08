@@ -1,4 +1,5 @@
 docker-elk
 node_modules
 .vscode
-
+__pycache__
+*.pyc
