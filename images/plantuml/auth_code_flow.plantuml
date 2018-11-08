@@ -1,0 +1,61 @@
+@startuml
+
+actor User as "User\n(RO with\nUser Agent)"
+participant Client as "Client\n(WEBAPP)"
+participant AS
+participant RS
+
+autonumber
+
+User -> Client: Request **/resource** (requires auth)
+note left
+    RO can either be
+    redirected to AS
+    after asking for 
+    a resource, or go
+    directly to a 
+    login link
+end note
+User <-- Client: Redirect to AS
+
+note over User, Client
+    **HTTP/1.1 302 Moved**
+    **Location: {Authorize URL}**
+end note
+
+User -> AS: AUTHORIZE
+note over User, AS
+    **GET /authorize**
+      **?client_id=${CLIENT_ID}**
+      **&response_type=code**
+      &redirect_uri=https://WEBAPP/cb
+      &state={STATE}
+      &scope=resource
+      &code_challenge={CHALLENGE}
+      &code_challenge_method={CHAL_METHOD}
+    **HTTP/1.1**
+    **Host: {AS}**
+end note
+
+User <-> AS: AUTHENTICATE & GRANT CONSENT
+
+User <-- AS: Redirect to Client (redirect_uri) with code
+note over User, AS
+    **HTTP/1.1 302 Found**
+    **Location: https://WEBAPP/cb?code=...**
+end note
+
+User -> Client: GET redirect_uri
+note over User, Client
+    **GET cb**
+    **HTTP/1.1**
+    **Host: WEBAPP**
+end note
+
+Client -> AS: Exchange code for token
+Client <-- AS: Token response
+Client -> RS: Access Resource with token
+Client <-- RS: Resource
+
+@enduml
+
