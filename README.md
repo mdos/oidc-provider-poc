@@ -6,13 +6,19 @@ The business development team has decided that the IdP market is ripe for disrup
 
 ## Methodology
 
-The desired architecture allows for guided evolution over multiple dimensions (application scalability, organizational scalability, etc. ). A good architecture allows for delayed decision making, extends the information gathering timeline,and minimizes tech debt and guesswork. Observability is a key enabler to allow metrics to drive the evolution of the design.
+A desirable architecture allows for guided evolution over multiple dimensions (application scalability, organizational scalability, agility, business domain alignment, etc.).
+
+Further, a good architecture allows for:
+
+* Abstraction of technology details
+* Extension of the information gathering timeline for concrete technology decisions
+* Minimization of tech debt and guesswork
+* Conway alignment
 
 Numerous case studies support the strategy of initially deploying a simpler, less-distributed system, followed by judicious inclusion of more complexity and distribution of services based on a demonstrated need.
 
-*Single Responsibility Principle* - Allows for easily deploying functionality as it's own service when metrics dictate the necessity to do so
+Observability is a key enabler to allow metrics to drive the evolution of the design.
 
-*Externalized Configuration* - Allows for easy 
 
 ## Influencing Factors
 
@@ -23,36 +29,15 @@ Numerous case studies support the strategy of initially deploying a simpler, les
 
 ## The Domain
 
-Please see [domain.md](./docs/domain.md) for information on the OAuth2/OIDC flows, data models, and system and container level diagrams.
+Please see [domain.md](./docs/domain.md) for information on the OAuth2/OIDC flows, and data models/
 
 ## PoC Scope
 
 Please see [design.md](./docs/design.md) for the system and container level designs, and the proposed scope of the PoC design and reference implementations.
 
-
-## 
-
-
 ## Dev Env Setup
 
-```
-# ELK + APM 
-git clone https://github.com/deviantony/docker-elk.git; cd docker-elk
-docker-compose -f docker-compose.yml -f extensions/apm-server/apm-server-compose.yml up
-```
-
-## Future Directions
-
-* Feature Flag support
-* CI/CD
-* Distributed logging (Jaegar/OpenTracing)
-* Test automation
-* Anomaly Detection, account blocking
-* API GW rate limiting
-* CRM/ticketing system
-* Authorization pipeline customization (Node.js)
-* connections to SAML IdPs
-* AWS Lambda / Google Cloud Functions / Azure Functions - (JS only ubiquitously supported language)
+Please see [dev.md](./docs/dev.md) for 
 
 ## References
 
@@ -72,3 +57,4 @@ Matt Stine
 Bob Martin
 Tim Berglund
 Simon Brown
+Sam Newman
