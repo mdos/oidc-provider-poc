@@ -23,21 +23,12 @@ Numerous case studies support the strategy of initially deploying a simpler, les
 
 ## The Domain
 
-Please see [domain.md](./docs/domain.md).
+Please see [domain.md](./docs/domain.md) for information on the OAuth2/OIDC flows, data models, and system and container level diagrams.
 
 ## PoC Scope
 
-This section details the scope of work to be done on the architectural design and the reference implementation.
+Please see [design.md](./docs/design.md) for the system and container level designs, and the proposed scope of the PoC design and reference implementations.
 
-### Scope of Evolutionary Design
-
-
-
-### Scope of Reference Impementation
-
-Though APM metrics will likely warrant separate services for the main `/authorize` and `/token` endpoints to allow their scale-out, they will initially be implemented in the API gateway code as separate express routes until concrete evidence supports their evolution.
-
-No email (SES)
 
 ## 
 
