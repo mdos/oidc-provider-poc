@@ -1,5 +1,7 @@
 # PoC Design
 
+SOLID design
+
 ## Scope
 
 This section details the scope of work to be done on the architectural design and the reference implementation. The distinction here is that the design will incorporate additional features and deployment elements which are not implemented in the initial reference implementation, but should be completed prior to deployment to an IaaS provider.
