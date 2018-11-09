@@ -4,6 +4,8 @@
 
 The business development team has decided that the IdP market is ripe for disruption! Our task is to deliver an OpenID Connect Provider PoC that the dev and itops teams can run with and evolve.
 
+It is assumed that open source options such as Keycloak have been evaluated and discarded, and that we are designing and implementing a system from the ground up.
+
 ## Methodology
 
 A desirable architecture allows for guided evolution over multiple dimensions (application scalability, organizational scalability, agility, business domain alignment, etc.).
@@ -24,8 +26,8 @@ Observability is a key enabler to allow metrics to drive the evolution of the de
 
 * *Compliance* : SOC2 / HIPAA / GDPR - audit, security, privacy, right to erasure, etc. It is assumed that the business would want to partake in verticals requiring compliance
 * *Team Assumptions* : 
-  - ITOPS : proficient deploying and administering cloud services (WAF, ALB, ...), docker, k8s, service mesh, CI/CD, DB management, Elastic Stack, Kafka
-  - DEV : The only assumption to grok the reference implementation is proficiency with Node.js 8.x. Java/Python/Go teams are free to implement backend microservices in their language of choice.
+  - ITOPS : proficient deploying and administering cloud services (WAF, ALB, ...), docker, k8s, service mesh, CI/CD, DB management, Elastic Stack, Kafka, potentially Cassandra
+  - DEV : The only assumption to grok the reference implementation is proficiency with Node.js 8.x. Ployglot Java/Python/Go teams are free to implement individual backend microservices in their language of choice, assuming of course those technologies are whitelisted by the company.
 
 ## The Domain
 
