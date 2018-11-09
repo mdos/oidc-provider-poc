@@ -22,16 +22,16 @@ Observability is a key enabler to allow metrics to drive the evolution of the de
 
 ## Influencing Factors
 
-* Compliance : SOC2 / HIPAA / GDPR - audit, security, privacy, right to erasure, etc. It is assumed that the system would want to partake in verticals requiring compliance
+* Compliance : SOC2 / HIPAA / GDPR - audit, security, privacy, right to erasure, etc. It is assumed that the business would want to partake in verticals requiring compliance
 * Team Assumptions: 
-  - ITOPS : proficient deploying and administering AWS services (WAF, ALB, ...), docker, k8s, service mesh, CI/CD, DB management, Elastic Stack, Kafka
-  - DEV : Only assumption to grok the reference implementation is familiarity with Node.js 8.x. Java/Python/Go teams are free to implement backend microservices in their language of choice.
+  - ITOPS : proficient deploying and administering cloud services (WAF, ALB, ...), docker, k8s, service mesh, CI/CD, DB management, Elastic Stack, Kafka
+  - DEV : The only assumption to grok the reference implementation is proficiency with Node.js 8.x. Java/Python/Go teams are free to implement backend microservices in their language of choice.
 
 ## The Domain
 
 Please see [domain.md](./docs/domain.md) for information on the OAuth2/OIDC flows, and data models
 
-## PoC Scope
+## PoC Design
 
 Please see [design.md](./docs/design.md) for the system and container level designs, and the proposed scope of the PoC design and reference implementations.
 
