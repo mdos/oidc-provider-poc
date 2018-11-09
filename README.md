@@ -2,7 +2,7 @@
 
 ## Overview
 
-The business development team has decided that the IdP market is ripe for disruption! Our task is to deliver a PoC that the dev and itops teams can run with and evolve.
+The business development team has decided that the IdP market is ripe for disruption! Our task is to deliver an OpenID Connect Provider PoC that the dev and itops teams can run with and evolve.
 
 ## Methodology
 
