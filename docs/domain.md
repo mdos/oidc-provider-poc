@@ -2,14 +2,12 @@
 
 ## Overview
 
-RFC Protocols are already established, and call for a synchronous HTTP REST req/resp data plane.
-The control plane allows for a more interesting asynchronous event sourced design options.
 
 ## Flows
 
 ### Authorization Code
 
-Front channel + Back Channel
+The canonical authorization flow, uses both front channel and back channel
 
 ### Implicit
 
@@ -22,3 +20,9 @@ Back channel only
 ### Client Credentials
 
 Back channel only
+
+## Data Model
+
+The data model below represents 
+
+<TBD INSERT>
