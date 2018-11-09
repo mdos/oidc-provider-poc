@@ -7,7 +7,9 @@
 
 ### Authorization Code
 
-The canonical authorization flow, uses both front channel and back channel
+The canonical authorization flow, uses both front channel and back channel.
+
+![oauth_code_grant image](../images/oauth_code_grant.png)
 
 ### Implicit
 

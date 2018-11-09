@@ -7,7 +7,7 @@ The control plane (for administrative configuration of clients, ) allows for a m
 
 The diagram below depicts the major actors in the OIDC ecosystem.
 
-[OIDC Overview](./images/oauth2_overview.png)
+![OIDC Overview image](../images/oauth2_overview.png)
 
 It is within the purview of this effort to design and implement the Authorization Server (shaded in green), and support the use of externally written clients. Time permitting, an admin app will be written to allow for customer administration of their clients.
 
