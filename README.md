@@ -13,6 +13,7 @@ A desirable architecture allows for guided evolution over multiple dimensions (a
 Further, a good architecture allows for:
 
 * Abstraction of technology details
+* Fault Isolation, Tolerance, and Recovery
 * Extension of the information gathering timeline for concrete technology decisions
 * Minimization of tech debt and guesswork
 * Conway alignment
@@ -23,8 +24,8 @@ Observability is a key enabler to allow metrics to drive the evolution of the de
 
 ## Influencing Factors
 
-* *Compliance* : SOC2 / HIPAA / GDPR - audit, security, privacy, right to erasure, etc. It is assumed that the business would want to partake in verticals requiring compliance
-* *Team Assumptions* : 
+* **Compliance** : SOC2 / HIPAA / GDPR - audit, security, privacy, right to erasure, etc. It is assumed that the business would want to partake in verticals requiring compliance
+* **Team Assumptions** : 
   - ITOPS : proficient deploying and administering cloud services (WAF, ALB, ...), docker, k8s, service mesh, CI/CD, DB management, Elastic Stack, Kafka, potentially Cassandra
   - DEV : The only assumption to grok the reference implementation is proficiency with Node.js 8.x. Ployglot Java/Python/Go teams are free to implement individual backend microservices in their language of choice, assuming of course those technologies are whitelisted by the company.
 
@@ -44,6 +45,7 @@ Please see [dev.md](./docs/dev.md) for development environment setup.
 
 * https://tools.ietf.org/html/rfc6749
 * https://openid.net/developers/specs/
+* https://openid.net/specs/openid-connect-core-1_0.html
 * https://oidcdebugger.com/
 * https://oauthdebugger.com/
 * https://jwt.io

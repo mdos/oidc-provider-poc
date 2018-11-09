@@ -25,10 +25,14 @@ Back channel only
 
 ## response_type table
 
-|  response_type |  scope | grant_type         | /authorize | /token                |
-| ---------------|--------|--------------------|------------|-----------------------|
-| code           |        | authorization_code | code       | access_token          |
-| code           | openid | authorization_code | code       | access_token id_token |
+|  response_type        |  scope | grant_type         | /authorize                 | /token                              |
+| ----------------------|--------|--------------------|----------------------------|-------------------------------------|
+| "code"                |        | authorization_code | code                       | access_token refresh_token          |
+| "code"                | openid | authorization_code | code                       | access_token refresh_token id_token |
+| "code token"          |        | authorization_code | code access_token          | access_token refresh_token          |
+| "code token"          | openid | authorization_code | code access_token          | access_token refresh_token id_token |
+| "code token id_token" |        | authorization_code | code access_token          | access_token refresh_token          |
+| "code token id_token" | openid | authorization_code | code access_token id_token | access_token refresh_token id_token |
 
 ## Data Model
 
