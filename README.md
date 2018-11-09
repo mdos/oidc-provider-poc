@@ -21,7 +21,6 @@ Numerous case studies support the strategy of initially deploying a simpler, les
 
 Observability is a key enabler to allow metrics to drive the evolution of the design.
 
-
 ## Influencing Factors
 
 * *Compliance* : SOC2 / HIPAA / GDPR - audit, security, privacy, right to erasure, etc. It is assumed that the business would want to partake in verticals requiring compliance
