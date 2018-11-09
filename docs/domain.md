@@ -15,15 +15,15 @@ The canonical authorization flow, uses both front channel and back channel.
 
 Front channel (/authorize) only, no refresh_tokens
 
-### Password (grant_type=password)
+### Password (grant_type=password, /authorize unused)
 
 Generally back channel (/token) only, can be used with highly trusted 1st party clients. Optional refresh_token
 
-### Client Credentials (grant_type=client_credentials)
+### Client Credentials (grant_type=client_credentials, /authorize unused)
 
 Back channel (/token) only
 
-### Refresh (grant_type=refresh_token)
+### Refresh (grant_type=refresh_token, /authorize unused)
 
 Back channel (/token) only
 
