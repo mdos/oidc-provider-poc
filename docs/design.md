@@ -1,6 +1,15 @@
 # PoC Design
 
+RFC Protocols are already established, and call for a synchronous HTTP REST req/resp data plane.
+The control plane (for administrative configuration of clients, ) allows for a more interesting asynchronous event sourced design options.
+
 ## System View
+
+The diagram below depicts the major actors in the OIDC ecosystem.
+
+[OIDC Overview](./images/oauth2_overview.png)
+
+It is within the purview of this effort to design and implement the Authorization Server (shaded in green), and support the use of externally written clients. Time permitting, an admin app will be written to allow for customer administration of their clients.
 
 ## Container View
 
