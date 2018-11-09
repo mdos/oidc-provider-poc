@@ -5,7 +5,7 @@
 
 ## Flows
 
-### Authorization Code
+### Authorization Code (response_type=code, grant_type=authorization_code)
 
 The canonical authorization flow, uses both front channel and back channel.
 
@@ -22,6 +22,13 @@ Back channel only
 ### Client Credentials
 
 Back channel only
+
+## response_type table
+
+|  response_type |  scope | grant_type         | /authorize | /token                |
+| ---------------|--------|--------------------|------------|-----------------------|
+| code           |        | authorization_code | code       | access_token          |
+| code           | openid | authorization_code | code       | access_token id_token |
 
 ## Data Model
 
