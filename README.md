@@ -1,10 +1,18 @@
 # iCIMS OIDC Provider PoC
 
+* [Overview](#Overview)
+* [Methodology](#Methodology)
+* [Influencing Factors](#Influencing-Factors)
+* [The Domain](#The-Domain)
+* [PoC Design](#PoC-Design)
+* [Development Environment Setup](#Development-Environment-Setup)
+* [References](#References)
+
 ## Overview
 
-The business development team has decided that the IdP market is ripe for disruption! Our task is to deliver an OpenID Connect Provider PoC that the dev and itops teams can run with and evolve.
+The business development team has decided that the IdP market is ripe for disruption! Our task is to deliver an [OpenID Connect](https://openid.net/connect/) Provider PoC that the **dev** and **itops** teams can run with and evolve.
 
-It is assumed that open source options such as Keycloak have been evaluated and discarded, and that we are designing and implementing a system from the ground up.
+It is assumed that open source options (such as [Keycloak](https://www.keycloak.org/)) have been evaluated and discarded, and that we are designing and implementing a system from the ground up.
 
 ## Methodology
 
@@ -20,13 +28,13 @@ Further, a good architecture allows for:
 
 Numerous case studies support the strategy of initially deploying a simpler, less-distributed system, followed by judicious inclusion of more complexity and distribution of services based on a demonstrated need.
 
-Observability is a key enabler to allow metrics to drive the evolution of the design.
+Observability and Telemetry is a key enabler to allow metrics to drive the evolution of the design.
 
 ## Influencing Factors
 
 * **Compliance** : SOC2 / HIPAA / GDPR - audit, security, privacy, right to erasure, etc. It is assumed that the business would want to partake in verticals requiring compliance
 * **Team Assumptions** : 
-  - ITOPS : proficient deploying and administering cloud services (WAF, ALB, ...), docker, k8s, service mesh, CI/CD, DB management, Elastic Stack, Kafka, potentially Cassandra
+  - ITOPS : proficient deploying and administering cloud services, docker, k8s, service mesh, CI/CD, DB management, Elastic Stack, NGINX, Kafka, potentially Cassandra
   - DEV : The only assumption to grok the reference implementation is proficiency with Node.js 8.x. Ployglot Java/Python/Go teams are free to implement individual backend microservices in their language of choice, assuming of course those technologies are whitelisted by the company.
 
 ## The Domain
@@ -37,7 +45,7 @@ Please see [domain.md](./docs/domain.md) for information on the OAuth2/OIDC flow
 
 Please see [design.md](./docs/design.md) for the system and container level designs, and the proposed scope of the PoC design and reference implementations.
 
-## Dev Env Setup
+## Development Environment Setup
 
 Please see [dev.md](./docs/dev.md) for development environment setup.
 

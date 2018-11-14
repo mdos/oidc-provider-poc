@@ -11,10 +11,16 @@ The diagram below depicts the major actors in the OIDC ecosystem.
 
 It is within the purview of this effort to design and implement the Authorization Server (shaded in green), and support the use of externally written clients. Time permitting, an admin app will be written to allow for customer administration of their clients.
 
+## Technology Choices
+
+Node 8.x was selected as the reference implementation framework of choice due to the following considerations : 
+* The I/O bound nature of expected workloads
+* Agility - Rapid iteration made possible with "schemaless" NoSQL Stores (MongoDB document and Redis key/value stores)
+* Extensibility - JS/Node is an attractive choice for allowing platform extensibility to cusomers in the future (hooks into specific events and the authorization pipeline)
+
 ## Container View
 
 Bounded contexts
-
 
 ## Scope of Reference Implementation
 
