@@ -15,6 +15,8 @@ The canonical authorization flow, uses both front channel and back channel.
 
 Front channel (/authorize) only, no refresh_tokens
 
+![oauth_implicit_flow image](../images/oauth_implicit_flow.png)
+
 ### Password (grant_type=password, /authorize unused)
 
 Generally back channel (/token) only, can be used with highly trusted 1st party clients. Optional refresh_token
