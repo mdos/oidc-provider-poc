@@ -1,25 +1,51 @@
 # OpenID Connect Domain Model
 
+* [Overview](#Overview)
+* [Flows](#Flows)
+  - [Authorization Code](#Authorization-Code)
+  - [Implicit](#Implicit)
+  - [Password](#Password)
+  - [Client Credentials](#Client-Credentials)
+  - [Hybrid](#Hybrid)
+
 ## Overview
 
+This document details the overall OIDC domain, including
+* OAuth2 and OIDC protocol flows
+* Classic Relational (ERD) and NoSQL Data models 
+
+For system design information, please see (./design.md).
 
 ## Flows
 
-### Authorization Code (response_type="code" , grant_type=authorization_code)
+### Authorization Code 
 
-The canonical authorization flow, uses both front channel and back channel.
+The canonical OAuth2 authorization flow, uses both front channel and back channel. 
+The initial request at the AS to the /authorization endpoint sets the 
+`response_type="code"`, the ensuing request for a token at the token endpoint 
+set `grant_type=authorization_code`).
 
 ![oauth_code_grant image](../images/oauth_code_grant.png)
 
-### Implicit (response_type="token", "id_token", "token id_token" , no grant_type - /token unused)
+**Figure**: OAuth2 Code Flow
 
-Front channel (/authorize) only, no refresh_tokens
+### Implicit 
+
+A front-channel only OAuth2 authorization flow (/token endpoint is unused), used by public (non-confidential) 
+clients such as user-agent resident Javascript applications (eg. React/Angular).
+The initial request at the AS to the /authorization endpoint sets the 
+`response_type="token"|"id_token"|"token id_token"`. The AS does not produce refresh_tokens. 
 
 ![oauth_implicit_flow image](../images/oauth_implicit_flow.png)
 
-### Password (grant_type=password, /authorize unused)
+**Figure**: OAuth2 Implicit Flow
 
-Generally back channel (/token) only, can be used with highly trusted 1st party clients. Optional refresh_token
+### Password
+
+Generally back channel (/token) only, can be used with confidential and/or highly
+trusted 1st party clients. 
+The initial request at the AS to the /token endpoint sets the 
+`grant_type="password"`. The AS may produce an optional refresh_token. 
 
 ### Client Credentials (grant_type=client_credentials, /authorize unused)
 
