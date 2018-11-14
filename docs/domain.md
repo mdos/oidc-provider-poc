@@ -26,9 +26,13 @@ The initial request at the AS to the /authorization endpoint sets the
 set `grant_type=authorization_code`).
 
 <p align="center">
+
 ![oauth_code_grant image](../images/oauth_code_grant.png)
+
 **Figure**: OAuth2 Code Flow
+
 </p>
+
 ### Implicit 
 
 A front-channel only OAuth2 authorization flow (/token endpoint is unused), used by public (non-confidential) 
@@ -37,8 +41,11 @@ The initial request at the AS to the /authorization endpoint sets the
 `response_type="token"|"id_token"|"token id_token"`. The AS does not produce refresh_tokens. 
 
 <p align="center">
+
 ![oauth_implicit_flow image](../images/oauth_implicit_flow.png)
+
 **Figure**: OAuth2 Implicit Flow
+
 </p>
 
 ### Password
