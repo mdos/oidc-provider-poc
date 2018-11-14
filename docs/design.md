@@ -40,11 +40,12 @@ Though APM metrics may warrant separate services for the main `/authorize` and `
 * Feature Flag support
 * CI/CD (CircleCI, Jenkins)
 * Distributed logging (Jaegar/OpenTracing)
-* Test automation (Chimp)
-* Anomaly Detection, account blocking
-* API GW rate limiting
 * Email messaging
+* Test automation (Chimp)
+* Reverse Proxy load balancing, rate limiting, circuit breakers etc (Traefik)
+* Anomaly Detection, account blocking
 * Authorization pipeline customization (Node.js)
-* connections to SAML IdPs
+* connections to SAML IdPs, Solcial login providers
+* Metric / Telemetry (Promethius, Sensu, Datadog, ...)
 * AWS Lambda / Google Cloud Functions / Azure Functions - (JS only ubiquitously supported language)* CRM/ticketing system
 
