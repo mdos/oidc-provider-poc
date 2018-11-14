@@ -34,8 +34,9 @@ Observability and Telemetry is a key enabler to allow metrics to drive the evolu
 
 * **Compliance** : SOC2 / HIPAA / GDPR - audit, security, privacy, right to erasure, etc. It is assumed that the business would want to partake in verticals requiring compliance
 * **Team Assumptions** : 
-  - ITOPS : proficient deploying and administering cloud services, docker, k8s, service mesh, CI/CD, DB management, Elastic Stack, NGINX, Kafka, potentially Cassandra
+  - ITOPS : proficient deploying and administering cloud services, docker, k8s, service mesh, CI/CD, DB management, Elastic Stack, Traefik, Kafka, potentially Cassandra
   - DEV : The only assumption to grok the reference implementation is proficiency with Node.js 8.x. Ployglot Java/Python/Go teams are free to implement individual backend microservices in their language of choice, assuming of course those technologies are whitelisted by the company.
+* **Rapid Iteration** - See [Technology Choices](./docs/design.md#Technology-Choices) for reasoning behind the technology stack selected for this PoC.
 
 ## The Domain
 
