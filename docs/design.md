@@ -14,7 +14,7 @@ It is within the purview of this effort to design and implement the Authorizatio
 ## Technology Choices
 
 Node 8.x was selected as the reference implementation framework of choice due to the following considerations : 
-* The I/O bound nature of expected workloads
+* The I/O bound, async nature of expected workloads
 * Agility - Rapid iteration made possible with "schemaless" NoSQL Stores (MongoDB document and Redis key/value stores)
 * Extensibility - JS/Node is an attractive choice for allowing platform extensibility to cusomers in the future (hooks into specific events and the authorization pipeline)
 
@@ -42,7 +42,9 @@ Though APM metrics may warrant separate services for the main `/authorize` and `
 * Distributed logging (Jaegar/OpenTracing)
 * Email messaging
 * Test automation (Chimp)
+* Client libraries for Android, iOS, javascript (server & client), java, etc.
 * Reverse Proxy load balancing, rate limiting, circuit breakers etc (Traefik)
+* Administration API for customers
 * Anomaly Detection, account blocking
 * Authorization pipeline customization (Node.js)
 * connections to SAML IdPs, Solcial login providers
