@@ -26,7 +26,8 @@ Authorization Server. The User-Agent is typically a *public* (non-confidential)
 entitiy like a web browser.
 
 **Back Channel** : Denotes communication between a *confidential* client and
-the Authorization Server. Back channel communication.
+the Authorization Server. Back channel communications are not observable by a
+public User-Agent.
 
 The [Authorization Code](#Authorization-Code) and [Implicit](#Implicit) flows become
 OpenID Connect flows when the `openid` scope is included in the `/authorization` request.
@@ -37,8 +38,8 @@ See the [Flow Type Table](#Flow-Type-Table) for details.
 
 The canonical OAuth2 authorization flow, uses both front channel and back channel.
 The initial request at the AS to the `/authorization` endpoint sets the
-`response_type="code"`, the ensuing request for a token at the token endpoint
-set `grant_type=authorization_code`).
+`response_type="code"`, the ensuing request for a token at the `/token` endpoint
+sets `grant_type=authorization_code`).
 
 ![oauth_code_grant image](../images/oauth_code_grant.png)
 
@@ -52,7 +53,8 @@ combinations and codes/tokens delivered for each.
 A front-channel only OAuth2/OIDC authorization flow (/token endpoint is unused), used by public (non-confidential)
 clients such as user-agent resident Javascript applications (eg. React/Angular).
 The initial request at the AS to the /authorization endpoint sets the
-`response_type="token"|"id_token"|"token id_token"`. The AS does not produce refresh_tokens.
+`response_type="token"`. OIDC flows (`scope="openid"`) add `response_type="id_token"|"token id_token"`.
+The AS does not produce refresh_tokens.
 
 ![oauth_implicit_flow image](../images/oauth_implicit_flow.png)
 
@@ -65,11 +67,11 @@ delivered for specific reponse_types.
 
 Also known as *Resource Owner Password Grant*, generally back channel
 with a confidential client, but can be used front channel with highly trusted 1st party clients.
-The initial request at the AS to the /token endpoint sets the
+The initial request at the AS to the `/token` endpoint sets the
 `grant_type="password"`. The AS may produce an optional refresh_token.
 
 This grant type should never be used with a 3rd party application, as the
-authorization code grant was designed exactly for that use case. This flow
+authorization_code grant was designed exactly for that use case. This flow
 is an improvement over direct client access to resource owner login credentials.
 If the client type is confidential, it must authenticate with the AS.
 
@@ -103,14 +105,15 @@ a previously obtained `refresh_token`. Uses the `/token` endpoint, and sets
 The Hybrid Flow is an OIDC (`scope: openid`) flow that hits both the `/authorize`
 and `/token` endpoints, and is a modification
 of the [Authorization Code Flow](#Authorization-Code) above. It uses
-`grant_type`="code id_token", "code token", or "code id_token token".
+`grant_type="code id_token"|"code token"|"code id_token token"`.
 See [Flow Type Table](#Flow-Type-Table) below for specific reponse_type / grant_type 
 combinations and codes/tokens delivered for each.
 
 ## Flow Type Table
 
 Implicit Flows - Return an `access_token` or `id_token` in the authentication reponse URL hash fragment, do not hit `/token` endpoint
-Hybrid Flows - Return an `access_token` or `id_token` in the authentication reponse URL hash fragment, additionally hit `/token` endpoint
+
+Hybrid Flows - Return an `access_token` or `id_token` in the authentication reponse URL hash fragment, and additionally hit `/token` endpoint
 
 |  response_type        |  scope | /authorize returns         | grant_type                  | /token  returns                     |
 | ----------------------|--------|----------------------------|-----------------------------|-------------------------------------|
