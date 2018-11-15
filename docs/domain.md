@@ -48,6 +48,20 @@ sets `grant_type=authorization_code`).
 See [Flow Type Table](#Flow-Type-Table) below for specific reponse_type / grant_type 
 combinations and codes/tokens delivered for each.
 
+The AS must:
+- `/authorize` endpoint:
+  * Check **client_id** at the `/authorize` endpoint
+  * Check allowed **scopes**
+  * Check allowed **redirect_uris**
+  * Authenticate the User (for PoC **user_id** / **password**) with a login/consent screen
+  * Check user consent
+  * Send redirect with new code (saving **code_ttl=now+code_exp** and **code_used=false**) and echo any state sent. (Note: code_exp is recommended to be under 10minutes)
+- `/token` endpoint (UA redirected to the client then requests an access token at the AS):
+  * Check Basic HTTP Auth header, authenticate the **client_id:client_secret**
+  * Check the **code** and **code_ttl** and **code_used**
+  * Check the **redirect_uri** for validity
+  * Respond with an access_token (**expires_in** setting) / refresh_token 
+
 ### Implicit 
 
 A front-channel only OAuth2/OIDC authorization flow (/token endpoint is unused), used by public (non-confidential)
@@ -62,6 +76,16 @@ The AS does not produce refresh_tokens.
 
 See [Flow Type Table](#Flow-Type-Table) below for information regarding the tokens
 delivered for specific reponse_types.
+
+The AS must:
+- `/authorize` endpoint:
+  * Check **client_id** at the `/authorize` endpoint
+  * Check allowed **scopes**
+  * Check allowed **redirect_uris**
+  * Authenticate the User (for PoC **user_id** / **password**) with a login/consent screen
+  * Check user consent
+  * Send redirect with access_token (**expires_in** setting) and/or id_token in the hash fragment.
+(Note: At this point we can additionally set a cookie to manage sessions)
 
 ### Password
 
@@ -79,16 +103,32 @@ If the client type is confidential, it must authenticate with the AS.
 
 **Figure**: Password Flow
 
+The AS must:
+- `/token` endpoint:
+  * Check Basic HTTP Auth header, authenticate the **client_id:client_secret**
+  * Check for allowed **scopes**
+  * Authenticate the user (**user_id** and **password**)
+  * Send access_token (**expires_in** setting) / refresh_token response
+
+Note: This endpoint grant_type must be rate limited against brute force attack.
+
 ### Client Credentials 
 
 The Client Credentials flow is a back channel flow which interacts with the 
 `/token` endpoint and sets `grant_type=client_credentials`. This flow is used
 for machine to machine communication which does not happen on behalf of a 
-resource owner. Generally used for cron and ETL types of jobs.
+resource owner. Generally used for cron and ETL types of jobs. refresh_tokens
+should not be issued.
 
 ![oauth_client_flow image](../images/oauth_client_flow.png)
 
 **Figure**: Client Credentials Flow
+
+The AS must:
+- `/token` endpoint:
+  * Check Basic HTTP Auth header, authenticate the **client_id:client_secret**
+  * Check for allowed **scopes**
+  * Send access_token (**expires_in** setting) response
 
 ### Refresh
 
@@ -99,6 +139,7 @@ a previously obtained `refresh_token`. Uses the `/token` endpoint, and sets
 ![oauth_refresh_flow image](../images/oauth_refresh_flow.png)
 
 **Figure**: Refresh Flow
+
 
 ### Hybrid
 
