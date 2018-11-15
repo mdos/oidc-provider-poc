@@ -11,54 +11,86 @@
 ## Overview
 
 This document details the overall OIDC domain, including
-* OAuth2 and OIDC protocol flows
+* OAuth2 and OIDC protocol flows. 
 * Classic Relational (ERD) and NoSQL Data models 
 
 For system design information, please see (./design.md).
 
 ## Flows
 
+The diagrams below eludicate the OAuth2 and OpenID Connect protocol details.
+
+**Front Channel** : Denotes communication between the end-user's User-Agent and the 
+Authorization Server. The User-Agent is typically a *public* (non-confidential)
+entitiy like a web browser.
+**Back Channel** : Denotes communication between a *confidential* client and 
+the Authorization Server. Back channel communication 
+
 ### Authorization Code 
 
 The canonical OAuth2 authorization flow, uses both front channel and back channel. 
 The initial request at the AS to the /authorization endpoint sets the 
 `response_type="code"`, the ensuing request for a token at the token endpoint 
-set `grant_type=authorization_code`).
+set `grant_type=authorization_code`). 
 
 ![oauth_code_grant image](../images/oauth_code_grant.png)
 
-**Figure**: OAuth2 Code Flow
+**Figure**: Code Flow
+
+See [Flow Type Table](#Flow-Type-Table) below for specific reponse_type / grant_type 
+combinations and codes/tokens delivered for each.
 
 ### Implicit 
 
-A front-channel only OAuth2 authorization flow (/token endpoint is unused), used by public (non-confidential) 
+A front-channel only OAuth2/OIDC authorization flow (/token endpoint is unused), used by public (non-confidential) 
 clients such as user-agent resident Javascript applications (eg. React/Angular).
 The initial request at the AS to the /authorization endpoint sets the 
 `response_type="token"|"id_token"|"token id_token"`. The AS does not produce refresh_tokens. 
 
 ![oauth_implicit_flow image](../images/oauth_implicit_flow.png)
 
-**Figure**: OAuth2 Implicit Flow
+**Figure**: Implicit Flow
+
+See [Flow Type Table](#Flow-Type-Table) below for specific reponse_types 
+and tokens delivered for each.
 
 ### Password
 
-Generally back channel (/token) only, can be used with confidential and/or highly
-trusted 1st party clients. 
+Also known as *Resource Owner Password Grant*, generally back channel
+with a confidential client, but can be used front channel with highly trusted 1st party clients.
 The initial request at the AS to the /token endpoint sets the 
 `grant_type="password"`. The AS may produce an optional refresh_token. 
 
-### Client Credentials (grant_type=client_credentials, /authorize unused)
+This grant type should never be used with a 3rd party application, as the
+authorization code grant was designed exactly for that use case. This flow
+is an improvement over direct client access to resource owner login credentials.
+If the client type is confidential, it must authenticate with the AS.
 
-Back channel (/token) only
+![oauth_password_flow image](../images/oauth_password_flow.png)
+
+**Figure**: Implicit Flow
+
+
+### Client Credentials 
+
+Back channel (/token) only (grant_type=client_credentials, /authorize unused)
+
+
 
 ### Refresh (grant_type=refresh_token, /authorize unused)
 
-Back channel (/token) only
+Back channel (/token) only flow used to obtain a new `access_token`/`refresh_token`
+pair by exchanging a previously obtained `refresh_token`.
 
 ### Hybrid (grant_type="code id_token", "code token", "code id_token token")
 
+The Hybrid Flow hits both the `/authorize` and `/token` endpoints, and is a modification
+of the [Authorization Code Flow](#Authorization-Code) above. 
+See [Flow Type Table](#Flow-Type-Table) below for specific reponse_type / grant_type 
+combinations and codes/tokens delivered for each.
 
-## response_type / grant_type table
+
+## Flow Type Table
 
 Implicit Flows - Return an `access_token` or `id_token` in the authentication reponse URL hash fragment, do not hit `/token` endpoint
 Hybrid Flows - Return an `access_token` or `id_token` in the authentication reponse URL hash fragment, additionally hit `/token` endpoint
