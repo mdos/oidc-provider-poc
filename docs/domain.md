@@ -6,6 +6,7 @@
   - [Implicit](#Implicit)
   - [Password](#Password)
   - [Client Credentials](#Client-Credentials)
+  - [Refresh](#Refresh)
   - [Hybrid](#Hybrid)
 
 ## Overview
@@ -20,11 +21,14 @@ For system design information, please see (./design.md).
 
 The diagrams below eludicate the OAuth2 and OpenID Connect protocol details.
 
-**Front Channel** : Denotes communication between the end-user's User-Agent and the 
+**Front Channel** : Denotes communication between the end-user's User-Agent and the
 Authorization Server. The User-Agent is typically a *public* (non-confidential)
 entitiy like a web browser.
-**Back Channel** : Denotes communication between a *confidential* client and 
-the Authorization Server. Back channel communication 
+**Back Channel** : Denotes communication between a *confidential* client and
+the Authorization Server. Back channel communication.
+
+Certain flows become OpenID Connect flows when the `openid` scope is included in the
+`/authorization` request. See the [Flow Type Table](#Flow-Type-Table) for details.
 
 ### Authorization Code 
 
@@ -68,27 +72,36 @@ If the client type is confidential, it must authenticate with the AS.
 
 ![oauth_password_flow image](../images/oauth_password_flow.png)
 
-**Figure**: Implicit Flow
-
+**Figure**: Password Flow
 
 ### Client Credentials 
 
-Back channel (/token) only (grant_type=client_credentials, /authorize unused)
+The Client Credentials flow is a back channel flow which interacts with the 
+`/token` endpoint and sets `grant_type=client_credentials`. This flow is used
+for machine to machine communication which does not happen on behalf of a 
+resource owner. Generally used for cron and ETL types of jobs.
 
+![oauth_client_flow image](../images/oauth_client_flow.png)
 
+**Figure**: Client Credentials Flow
 
-### Refresh (grant_type=refresh_token, /authorize unused)
+### Refresh 
 
-Back channel (/token) only flow used to obtain a new `access_token`/`refresh_token`
-pair by exchanging a previously obtained `refresh_token`.
+Flow used to obtain a new `access_token`/`refresh_token` pair by exchanging 
+a previously obtained `refresh_token`. Uses the `/token` endpoint, and sets
+`grant_type=refresh_token`.
 
-### Hybrid (grant_type="code id_token", "code token", "code id_token token")
+![oauth_refresh_flow image](../images/oauth_refresh_flow.png)
+
+**Figure**: Refresh Flow
+
+### Hybrid 
 
 The Hybrid Flow hits both the `/authorize` and `/token` endpoints, and is a modification
-of the [Authorization Code Flow](#Authorization-Code) above. 
+of the [Authorization Code Flow](#Authorization-Code) above. It uses
+`grant_type`="code id_token", "code token", or "code id_token token".
 See [Flow Type Table](#Flow-Type-Table) below for specific reponse_type / grant_type 
 combinations and codes/tokens delivered for each.
-
 
 ## Flow Type Table
 
