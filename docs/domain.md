@@ -24,18 +24,21 @@ The diagrams below eludicate the OAuth2 and OpenID Connect protocol details.
 **Front Channel** : Denotes communication between the end-user's User-Agent and the
 Authorization Server. The User-Agent is typically a *public* (non-confidential)
 entitiy like a web browser.
+
 **Back Channel** : Denotes communication between a *confidential* client and
 the Authorization Server. Back channel communication.
 
-Certain flows become OpenID Connect flows when the `openid` scope is included in the
-`/authorization` request. See the [Flow Type Table](#Flow-Type-Table) for details.
+The [Authorization Code](#Authorization-Code) and [Implicit](#Implicit) flows become
+OpenID Connect flows when the `openid` scope is included in the `/authorization` request.
+Hybrid Flows are created based on further modification of OpenID Authorization Code flows.
+See the [Flow Type Table](#Flow-Type-Table) for details.
 
-### Authorization Code 
+### Authorization Code
 
-The canonical OAuth2 authorization flow, uses both front channel and back channel. 
-The initial request at the AS to the /authorization endpoint sets the 
-`response_type="code"`, the ensuing request for a token at the token endpoint 
-set `grant_type=authorization_code`). 
+The canonical OAuth2 authorization flow, uses both front channel and back channel.
+The initial request at the AS to the `/authorization` endpoint sets the
+`response_type="code"`, the ensuing request for a token at the token endpoint
+set `grant_type=authorization_code`).
 
 ![oauth_code_grant image](../images/oauth_code_grant.png)
 
@@ -46,24 +49,24 @@ combinations and codes/tokens delivered for each.
 
 ### Implicit 
 
-A front-channel only OAuth2/OIDC authorization flow (/token endpoint is unused), used by public (non-confidential) 
+A front-channel only OAuth2/OIDC authorization flow (/token endpoint is unused), used by public (non-confidential)
 clients such as user-agent resident Javascript applications (eg. React/Angular).
-The initial request at the AS to the /authorization endpoint sets the 
-`response_type="token"|"id_token"|"token id_token"`. The AS does not produce refresh_tokens. 
+The initial request at the AS to the /authorization endpoint sets the
+`response_type="token"|"id_token"|"token id_token"`. The AS does not produce refresh_tokens.
 
 ![oauth_implicit_flow image](../images/oauth_implicit_flow.png)
 
 **Figure**: Implicit Flow
 
-See [Flow Type Table](#Flow-Type-Table) below for specific reponse_types 
-and tokens delivered for each.
+See [Flow Type Table](#Flow-Type-Table) below for information regarding the tokens
+delivered for specific reponse_types.
 
 ### Password
 
 Also known as *Resource Owner Password Grant*, generally back channel
 with a confidential client, but can be used front channel with highly trusted 1st party clients.
-The initial request at the AS to the /token endpoint sets the 
-`grant_type="password"`. The AS may produce an optional refresh_token. 
+The initial request at the AS to the /token endpoint sets the
+`grant_type="password"`. The AS may produce an optional refresh_token.
 
 This grant type should never be used with a 3rd party application, as the
 authorization code grant was designed exactly for that use case. This flow
@@ -85,7 +88,7 @@ resource owner. Generally used for cron and ETL types of jobs.
 
 **Figure**: Client Credentials Flow
 
-### Refresh 
+### Refresh
 
 Flow used to obtain a new `access_token`/`refresh_token` pair by exchanging 
 a previously obtained `refresh_token`. Uses the `/token` endpoint, and sets
@@ -95,9 +98,10 @@ a previously obtained `refresh_token`. Uses the `/token` endpoint, and sets
 
 **Figure**: Refresh Flow
 
-### Hybrid 
+### Hybrid
 
-The Hybrid Flow hits both the `/authorize` and `/token` endpoints, and is a modification
+The Hybrid Flow is an OIDC (`scope: openid`) flow that hits both the `/authorize`
+and `/token` endpoints, and is a modification
 of the [Authorization Code Flow](#Authorization-Code) above. It uses
 `grant_type`="code id_token", "code token", or "code id_token token".
 See [Flow Type Table](#Flow-Type-Table) below for specific reponse_type / grant_type 
