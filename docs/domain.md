@@ -198,7 +198,7 @@ is a detail, not part of the architecture" -- R. Martin.
 
 ### Logical Data Model
 
-![OIDC Logical Relational Model](../images/IODC_data_models-LogicalErd.png)
+![OIDC Logical Relational Model](../images/OIDC_data_models-LogicalErd.png)
 
 **Figure**: Logical Relational Model
 
