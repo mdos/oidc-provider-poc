@@ -8,6 +8,9 @@
   - [Client Credentials](#Client-Credentials)
   - [Refresh](#Refresh)
   - [Hybrid](#Hybrid)
+* [Data Models](#Data-Models)
+  - [Logical Data Model (ERD)](#Logical-Data-Model)
+  - [NoSQL Document Model](#NoSQL-Document-Model)
 
 ## Overview
 
@@ -174,14 +177,29 @@ Hybrid Flows - Return an `access_token` or `id_token` in the authentication repo
 |                       |        |                            | client_credentials          | access_token                        |
 |                       |        |                            | refresh_token               | access_token refresh_token          |
 
-## Data Model
+## Data Models
 
 The models below represent a classic ERD model and NoSQL document model of static configuration data and runtime data in the system.
+The NoSQL model will also be referred to as the **aggregate** model.
 
-### Configuration Data ERD
+A physical ERD model isn't included here, due to a design decision to go with a document based model. 
+A document based model makes sense in this system due to an **impedance mismatch** between the query/update affinity
+in the system, the **cardinality** relationships, and the relative **volatility** (update frequency) of the entities.
+It also makes sense given the desire for malleability, and the fact that ALTER statements are generally considere
+_evil_.
 
-### Configuration Data NoSQL Document Model
+The aggregate model embeds (denormalizes) key/value entities where appropriate to align with the query affinity,
+cardinality (1:1 and 1:few), and volatility of that data. References are used where appropriate (1:many and many:many).
 
-### Runtime Request Data ERD
+There will be cases where cardinality, volatility, and affinity conflict. This is precisely why a service layer
+(generally aligned with affinity) abstracts the details of the data model from the API used to interact with the 
+data. The underlying DB is therefore able to evolve and align with a model that makes sense - "The database
+is a detail, not part of the architecture" -- R. Martin.
 
-### Runtime Request Data NoSQL Document Model
+### Logical Data Model
+
+![OIDC Logical Relational Model](../images/IODC_data_models-LogicalErd.png)
+
+**Figure**: Logical Relational Model
+
+### NoSQL Aggregate Model
