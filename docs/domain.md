@@ -185,21 +185,98 @@ The NoSQL model will also be referred to as the **aggregate** model.
 A physical ERD model isn't included here, due to a design decision to go with a document based model. 
 A document based model makes sense in this system due to an **impedance mismatch** between the query/update affinity
 in the system, the **cardinality** relationships, and the relative **volatility** (update frequency) of the entities.
-It also makes sense given the desire for malleability, and the fact that ALTER statements are generally considere
-_evil_.
+There are also fields, like `scopes` and `allowed_redirect_uris` for example, which may contain arbitrarily long strings.
+A document based model also makes sense given the desire for malleability and agility, and the fact that 
+ALTER statements are generally considered _evil_.
 
 The aggregate model embeds (denormalizes) key/value entities where appropriate to align with the query affinity,
 cardinality (1:1 and 1:few), and volatility of that data. References are used where appropriate (1:many and many:many).
 
 There will be cases where cardinality, volatility, and affinity conflict. This is precisely why a service layer
 (generally aligned with affinity) abstracts the details of the data model from the API used to interact with the 
-data. The underlying DB is therefore able to evolve and align with a model that makes sense - "The database
-is a detail, not part of the architecture" -- R. Martin.
+data. The underlying DB is therefore able to evolve and align with a model that makes sense.
+
+ _"The database is a detail, not part of the architecture" -- R. Martin_
 
 ### Logical Data Model
+
+An initial revision of a logical data model looks like the following:
 
 ![OIDC Logical Relational Model](../images/OIDC_data_models-LogicalErd.png)
 
 **Figure**: Logical Relational Model
 
+Note that this model can be further normalized, but I've stopped here since the impedance mismatch with our use case
+is already apparent. Note also that entity metadata hasn't been included (such as `createdAt`, `updatedAt` 
+and `version` for optimistic locking to prevent concurrent lost updates). 
+
 ### NoSQL Aggregate Model
+
+The central entity used at runtime is the **Client**, representing an OIDC client application. The **Client** 
+information, along with it's children (**Resource**) are retrieved during authorization and token flows
+and used to authenticate the client, check on redirect_uris, authenticate the **User**, and authorize
+use of a **Resource**. These entities each have a similar 1:few cardinality relationship, and data
+reads access the parent **Client** item plus the children **Resource** data. They are very infrequently
+written to, but are generally written to as a single configuration entity. Therefore, basic NoSQL
+best practice is to denormalize these objects and embed the **Resource** entries as nested objects.
+This will also result in better performance for a predominantly read-heavy data access pattern.
+
+See the schemas in the code for specific concrete model information
+
+```javascript
+// TENANT
+{
+  _id:                      String,
+  tenant_domain:            String, // PK
+  well_known_url:           String,
+  authorization_endpoint:   String,
+  token_endpoint:           String,
+  userinfo_endpoint:        String,
+  jwks_uri:                 String,
+  keys: [
+    {
+      key_id:   String,
+      kty:      String,
+      use:      String,
+      alg:      String,
+      x5c:      String,
+      n:        String,
+      e:        String,
+      x5t:      String
+    }
+  ],
+  admin_db:                 String,
+  updatedAt:                Date,
+  version:                  Number
+}
+
+// Aggregate type - Client application and the Resources beloging to that client
+{
+  _id:                        String,
+  client_id:                  String,
+  tenant_domain:              String,  // REFERENCE
+  issuer:                     String,
+  scopes_supported:           String,
+  response_types_supported:   String,
+  session_ttl:                Number,
+  signing_key:                String,  // PEM
+  resources: [
+    {
+      authorized:         Boolean,
+
+    },
+  ],
+
+}
+
+// Represents a single request at either `/authorize` or `/token` endpoints
+{
+  _id: <request_id>
+  client_id: <client_id>
+  response_type: string,
+
+}
+
+```
+
+Obvious care must be taken with the private signing keys
