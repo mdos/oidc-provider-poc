@@ -233,7 +233,7 @@ See the schemas in the code for specific concrete model information
   token_endpoint:           String,
   userinfo_endpoint:        String,
   jwks_uri:                 String,
-  keys: [
+  pub_keys: [
     {
       key_id:   String,
       kty:      String,
