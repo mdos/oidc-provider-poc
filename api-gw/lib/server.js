@@ -1,5 +1,6 @@
 'use strict';
 
+/*
 const apm = require('elastic-apm-node').start(
   {
     serviceName: 'api-gw',
@@ -7,6 +8,7 @@ const apm = require('elastic-apm-node').start(
     serverUrl: process.env.APM_URL || 'http://localhost:8200',
   },
 );
+*/
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -15,14 +17,34 @@ const path = require('path');
 const http = require('http');
 const uuid4 = require('uuid/v4');
 const util = require('util');
-const { name, version } = require('./package.json');
 
 const portConfig = Symbol('port');
 const hostConfig = Symbol('host');
 
-//
-// Server class attaches routes automatically from ./controllers folder
-//
+/*
+ * Server : Class used to manage the express application for our endpoint.
+ *
+ * Synopsis:
+ * 
+ *  Express operates by esentially applying middleware functions in a stack to incoming
+ *  HTTP requests, this class handles much of the boilerplate required to configure and
+ *  start a server. The middleware / route / error handling stack can become easily
+ *  obfuscated if those functions are scattered in code.
+ *  This class allows for a single point of truth to allow for easier reasoning around
+ *  the processing pipeline.
+ * 
+ *  Exporting this functionality as a lib / class allows for much easier testing as well
+ *
+ * Usage:
+ * 
+ *  const server = new Server( { opts } );
+ *  server.attachMiddleware(handler);
+ *  server.attachRouter('/api1', router1);
+ *  server.attachRouter('/api2', router2);
+ *  server.attachErrorHandler(handler);
+ *  server.start([port]);
+ * 
+ */
 class Server {
     constructor(options = {}) {
         // check for required options, throw here
@@ -42,6 +64,29 @@ class Server {
         this.server = http.createServer(this.app);
     }
 
+    // Attaches an express Router to the route (which in turn generally hooks up a controller)
+    attachRouter(route, router) {
+      this.app.use(route, router);
+    }
+
+    // Attaches a route handler - function signature (req, res)
+    attachRouteHandler(route, handler) {
+      if(handler.length != 2) { throw new Error(`Expected two args to router, got ${handler.length}`); }
+      this.app.use(route, handler);
+    }
+
+    // Attach an error handler - function signature (err, req, res, next)
+    attachErrorHandler(handler) {
+      if(handler.length != 4) { throw new Error(`Expected four args to error handlerr, got ${handler.length}`); }
+      this.app.use(handler);
+    }
+
+    // Attach middleware - function signature (req, res, next)
+    attachMiddleware(handler) {
+      if(handler.length != 3) { throw new Error(`Expected three args to middleware handlerr, got ${handler.length}`); }
+      this.app.use(handler);
+    }
+
     get url() {
         return `http://${this.address}:${this.port}`;
     }
@@ -59,6 +104,7 @@ class Server {
             this[portConfig] = port;
         }
         const listen = util.promisify(this.server.listen.bind(this.server));
+        console.log(`Listening on ${this[hostConfig]} : ${this[portConfig]}`);
         return listen(this[portConfig], this[hostConfig]);
     }
 
