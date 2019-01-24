@@ -1,0 +1,12 @@
+<h1>Authorization Server</h1>
+Please login and consent to the requested scopes.
+(client_id: {{query.client_id}}, state: {{query.state}})
+<form action="/authorize/authn" method="POST">
+<input type="hidden" name="csrfToken" value="{{csrfToken}}">
+<P>Requested scopes: {{scopes}}</P>
+<p><b>Login:</b></p>
+Username : <input type="text" name="user"><br />
+Password : <input type="password" name="password"><br />
+<input type="submit" name="Consent" value="Consent">
+<input type="submit" name="Deny" value="Deny">
+</form>
