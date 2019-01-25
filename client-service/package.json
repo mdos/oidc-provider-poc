@@ -1,14 +1,13 @@
 {
-  "name": "api-gw",
+  "name": "client-service",
   "version": "1.0.0",
-  "description": "API Gateway for OIDC Provider PoC",
+  "description": "Client Data services for OIDC Provider PoC",
   "main": "index.js",
   "repository": "",
   "author": "Marc Dostie <marc.dostie@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -16,13 +15,9 @@
     "elastic-apm-node": "^2.2.0",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
-    "jsrsasign": "^8.0.12",
     "lodash": "^4.17.11",
     "morgan": "^1.9.1",
     "path": "^0.12.7",
-    "randomstring": "^1.1.5",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.2",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

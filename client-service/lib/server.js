@@ -47,7 +47,6 @@ class Server {
         this[portConfig] = options.port || null;
         this[hostConfig] = options.host || null;
         this.config = options.config || {};
-        this.version = options.version || '';
         this.app = options.app || express();
 
         // configure middleware
@@ -58,11 +57,6 @@ class Server {
         // attaching our own http server to express allows for start and stop
         // operations
         this.server = http.createServer(this.app);
-    }
-
-    // Attaches a controller to the server, which will configure it's own routes
-    attachController(controller) {
-      controller.routes(this.app);
     }
 
     // Attaches an express Router to the route (which in turn generally hooks up a controller)
