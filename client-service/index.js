@@ -1,5 +1,6 @@
 'use strict';
 
+/*
 // ELK APM
 const apm = require('elastic-apm-node').start(
   {
@@ -8,6 +9,7 @@ const apm = require('elastic-apm-node').start(
     serverUrl: process.env.APM_URL || 'http://localhost:8200',
   },
 );
+*/
 
 
 const path = require('path');

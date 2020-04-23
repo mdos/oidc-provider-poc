@@ -1,4 +1,6 @@
-# iCIMS OIDC Provider PoC
+# Toy OIDC Provider PoC
+
+Playing with protocols
 
 * [Overview](#Overview)
 * [Methodology](#Methodology)
@@ -10,7 +12,7 @@
 
 ## Overview
 
-The business development team has decided that the IdP market is ripe for disruption! Our task is to deliver an [OpenID Connect](https://openid.net/connect/) Provider PoC that the **dev** and **itops** teams can run with and evolve.
+The business development team of our fictitional startup has decided that the IdP market is ripe for disruption! Our task is to deliver an [OpenID Connect](https://openid.net/connect/) Provider PoC that the **dev** and **itops** teams can run with and evolve.
 
 It is assumed that open source options (such as [Keycloak](https://www.keycloak.org/)) have been evaluated and discarded, and that we are designing and implementing a system from the ground up.
 
